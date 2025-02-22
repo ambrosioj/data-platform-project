@@ -1,66 +1,64 @@
-# Development Container Project
+# Docker Development Environment
 
-This project sets up a development environment using Docker that includes Apache Spark, Apache Airflow, and Jupyter Notebooks. The following sections provide an overview of the project structure, setup instructions, and usage guidelines.
+This project sets up a development environment using Docker for working with Apache Spark, Apache Airflow, and Jupyter Notebooks. It allows you to develop Spark code, create Airflow DAGs, and run Jupyter notebooks seamlessly.
 
 ## Project Structure
 
 ```
-dev-container-project
-├── .devcontainer
-│   ├── Dockerfile          # Instructions to build the Docker image
-│   └── devcontainer.json   # Configuration for the development container
-├── spark
-│   └── spark-config.conf   # Configuration settings for Spark
-├── airflow
-│   ├── dags
-│   │   └── example_dag.py  # Example Directed Acyclic Graph (DAG) for Airflow
-│   └── airflow.cfg         # Configuration file for Airflow
-├── notebooks
-│   └── example_notebook.ipynb # Jupyter Notebook for analysis and documentation
-├── docker-compose.yml       # Orchestration file for Docker services
+docker-dev-environment
+├── docker-compose.yml       # Defines services for Spark, Airflow, and Jupyter
+├── spark                    # Directory for Spark-related files
+│   ├── Dockerfile           # Dockerfile for building Spark image
+│   └── config
+│       └── spark-defaults.conf # Configuration file for Spark
+├── airflow                  # Directory for Airflow-related files
+│   ├── Dockerfile           # Dockerfile for building Airflow image
+│   ├── dags                 # Directory for Airflow DAGs
+│   │   └── example_dag.py   # Example DAG for Airflow
+│   └── config
+│       └── airflow.cfg      # Configuration file for Airflow
+├── jupyter                  # Directory for Jupyter-related files
+│   ├── Dockerfile           # Dockerfile for building Jupyter image
+│   └── notebooks            # Directory for Jupyter notebooks
+│       └── example_notebook.ipynb # Example Jupyter notebook
 └── README.md                # Project documentation
 ```
 
-## Setup Instructions
+## Getting Started
 
-1. **Clone the Repository**: 
-   Clone this repository to your local machine.
+### Prerequisites
 
-   ```bash
+- Docker
+- Docker Compose
+
+### Setup
+
+1. Clone the repository:
+   ```
    git clone <repository-url>
-   cd dev-container-project
+   cd docker-dev-environment
    ```
 
-2. **Build the Development Container**: 
-   Use the provided Dockerfile to build the development container.
-
-   ```bash
-   cd .devcontainer
-   docker build -t dev-container .
+2. Build and start the services:
+   ```
+   docker-compose up --build
    ```
 
-3. **Start the Services**: 
-   Use Docker Compose to start the services defined in `docker-compose.yml`.
+### Accessing the Services
 
-   ```bash
-   docker-compose up
-   ```
+- **Jupyter Notebook**: Access Jupyter at `http://localhost:8888` in your web browser.
+- **Airflow**: Access the Airflow web interface at `http://localhost:8080`.
+- **Spark**: Spark can be accessed through the Jupyter notebooks or via the Spark UI.
 
-4. **Access Jupyter Notebooks**: 
-   Once the services are running, you can access Jupyter Notebooks in your web browser at `http://localhost:8888`.
+### Usage
 
-## Usage Guidelines
-
-- **Spark**: Use the configuration file `spark/spark-config.conf` to set up your Spark environment. Modify parameters as needed for your applications.
-  
-- **Airflow**: The example DAG can be found in `airflow/dags/example_dag.py`. You can create additional DAGs by following the structure of the example.
-
-- **Notebooks**: Use the Jupyter Notebook located in `notebooks/example_notebook.ipynb` for data analysis and visualization.
+- Use the provided Jupyter notebook (`example_notebook.ipynb`) to develop and test your Spark code.
+- Create your own DAGs in the `airflow/dags` directory by modifying or adding new Python files.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any enhancements or bug fixes.
+Feel free to submit issues or pull requests for improvements or additional features.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License.

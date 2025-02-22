@@ -8,7 +8,6 @@ def example_task():
 
 default_args = {
     'owner': 'airflow',
-    'depends_on_past': False,
     'start_date': datetime(2023, 10, 1),
     'retries': 1,
 }
@@ -25,15 +24,10 @@ start = DummyOperator(
     dag=dag,
 )
 
-example_task_operator = PythonOperator(
+task1 = PythonOperator(
     task_id='example_task',
     python_callable=example_task,
     dag=dag,
 )
 
-end = DummyOperator(
-    task_id='end',
-    dag=dag,
-)
-
-start >> example_task_operator >> end
+start >> task1

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  spark:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+    volumes:
+      - ./spark:/app/spark
+    ports:
+      - "8080:8080"  # Spark UI
+
+  airflow:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+    volumes:
+      - ./airflow:/app/airflow
+    ports:
+      - "8081:8080"  # Airflow UI
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////app/airflow/airflow.db
+
+  jupyter:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+    volumes:
+      - ./notebooks:/app/notebooks
+    ports:
+      - "8888:8888"  # Jupyter Notebook
+    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --notebook-dir=/app/notebooks
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  airflow_data:
+  spark_data:
